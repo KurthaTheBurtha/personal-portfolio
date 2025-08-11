@@ -1,0 +1,113 @@
+backend:
+  name: github
+  repo: KurthaTheBurtha/personal-portfolio
+  branch: main
+  app_id: Ov23liyytLPsvkMO02Ld
+  base_url: https://api.netlify.com
+  auth_endpoint: auth
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+publish_mode: editorial_workflow
+
+collections:
+  - name: hero
+    label: Hero
+    files:
+      - file: "content/hero.json"
+        label: Hero Content
+        name: hero
+        fields:
+          - { label: Name, name: name, widget: string }
+          - { label: Subtitle, name: subtitle, widget: string }
+          - { label: Description, name: description, widget: text }
+          - { label: Resume URL, name: resumeUrl, widget: string, required: false }
+          - label: Social Links
+            name: socialLinks
+            widget: list
+            fields:
+              - { label: Type, name: type, widget: select, options: [github, linkedin, email] }
+              - { label: URL, name: href, widget: string }
+  - name: about
+    label: About
+    files:
+      - file: "content/about.json"
+        label: About Content
+        name: about
+        fields:
+          - { label: Heading, name: heading, widget: string }
+          - { label: Tagline, name: tagline, widget: string }
+          - { label: Paragraphs, name: paragraphs, widget: list, field: { label: Paragraph, name: paragraph, widget: text } }
+          - label: Drivers
+            name: drivers
+            widget: list
+            field: { label: Driver, name: driver, widget: string }
+          - label: Info Cards
+            name: infoCards
+            widget: list
+            fields:
+              - { label: Icon, name: icon, widget: select, options: [GraduationCap, Code, Target, Award] }
+              - { label: Title, name: title, widget: string }
+              - { label: Description, name: description, widget: text }
+  - name: projects
+    label: Projects
+    files:
+      - file: "content/projects.json"
+        label: Projects Content
+        name: projects
+        fields:
+          - { label: Heading, name: heading, widget: string }
+          - { label: Subheading, name: subheading, widget: string }
+          - label: Projects
+            name: projects
+            widget: list
+            fields:
+              - { label: Title, name: title, widget: string }
+              - { label: Period, name: period, widget: string }
+              - { label: Status, name: status, widget: string }
+              - { label: Status Color Class, name: statusColor, widget: string }
+              - { label: Description, name: description, widget: text }
+              - label: Metrics
+                name: metrics
+                widget: list
+                fields:
+                  - { label: Icon, name: icon, widget: select, options: [DollarSign, Users, Zap, Star] }
+                  - { label: Text, name: text, widget: string, required: false }
+                  - { label: Counter, name: counter, widget: number, required: false, default: 0, value_type: float }
+                  - { label: Suffix, name: suffix, widget: string, required: false }
+              - { label: Technologies, name: technologies, widget: list, field: { label: Technology, name: technology, widget: string } }
+              - { label: Image URL, name: image, widget: string }
+  - name: skills
+    label: Skills
+    files:
+      - file: "content/skills.json"
+        label: Skills Content
+        name: skills
+        fields:
+          - { label: Heading, name: heading, widget: string }
+          - { label: Subheading, name: subheading, widget: string }
+          - label: Categories
+            name: categories
+            widget: list
+            fields:
+              - { label: Title, name: title, widget: string }
+              - { label: Icon, name: icon, widget: select, options: [Code, Globe, Database, Brain, Smartphone, Wrench] }
+              - { label: Color Class, name: color, widget: string }
+              - { label: Skills, name: skills, widget: list, field: { label: Skill, name: skill, widget: string } }
+  - name: qualities
+    label: Professional Qualities
+    files:
+      - file: "content/qualities.json"
+        label: Qualities Content
+        name: qualities
+        fields:
+          - { label: Qualities Heading, name: qualitiesHeading, widget: string }
+          - { label: Qualities, name: qualities, widget: list, field: { label: Quality, name: quality, widget: string } }
+          - { label: Languages Heading, name: languagesHeading, widget: string }
+          - label: Languages
+            name: languages
+            widget: list
+            fields:
+              - { label: Name, name: name, widget: string }
+              - { label: Level, name: level, widget: string } 
