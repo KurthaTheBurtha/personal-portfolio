@@ -1,33 +1,43 @@
-name: Build and Deploy to Hostinger
+name: Deploy to Hostinger
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write  # This is crucial
+      pages: write
+      id-token: write
+    
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      - name: Install deps
-        run: npm ci || npm install --force
-      - name: Build static site
-        run: npm run build
-      - name: Prepare deploy folder
-        run: |
-          rm -rf deploy
-          mkdir -p deploy
-          cp -r out/* deploy/
-      - name: Deploy to branch hostinger-deploy
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          publish_dir: ./deploy
-          publish_branch: hostinger-deploy
-          github_token: ${{ secrets.GITHUB_TOKEN }} 
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Fetch full history
+        
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm install
+      
+    - name: Build
+      run: npm run build
+      
+    - name: Deploy to hostinger-deploy branch
+      uses: peaceiris/actions-gh-pages@v4  # Updated version
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./out
+        publish_branch: hostinger-deploy
+        force_orphan: true
+        user_name: 'github-actions[bot]'
+        user_email: 'github-actions[bot]@users.noreply.github.com'
