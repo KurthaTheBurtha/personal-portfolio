@@ -2,7 +2,7 @@ backend:
   name: github
   repo: KurthaTheBurtha/personal-portfolio
   branch: main
-  app_id: YOUR_GITHUB_OAUTH_APP_CLIENT_ID
+  app_id: Ov23liyytLPsvkMO02Ld
   base_url: https://api.netlify.com
   auth_endpoint: auth
 
