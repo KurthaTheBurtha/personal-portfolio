@@ -7,6 +7,13 @@ import { useEffect, useState } from "react"
 import ParallaxElement from './parallax-element'
 import FloatingElement from './floating-element'
 import { useScrollPosition } from "@/hooks/use-scroll-position"
+import hero from "@/content/hero.json"
+
+const iconMap = {
+  github: Github,
+  linkedin: Linkedin,
+  email: Mail,
+} as const
 
 export default function Hero() {
   const [mounted, setMounted] = useState(false)
@@ -73,7 +80,7 @@ export default function Hero() {
               <div className="absolute inset-0 rounded-full border-2 border-blue-400/30 scale-110 animate-ping opacity-20"></div>
               <Image
                 src="/profile.jpg"
-                alt="Kurt Schimmel"
+                alt={`Portrait of ${hero.name}`}
                 width={192}
                 height={192}
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
@@ -88,7 +95,7 @@ export default function Hero() {
             mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`} style={{ transitionDelay: '200ms' }}>
             <h1 className="text-6xl md:text-7xl font-bold text-white mb-6">
-              Hi, I'm <span className="text-blue-400 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent animate-pulse">Kurt</span>
+              Hi, I'm <span className="text-blue-400 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent animate-pulse">{hero.name}</span>
             </h1>
           </div>
         </ParallaxElement>
@@ -99,7 +106,7 @@ export default function Hero() {
             mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`} style={{ transitionDelay: '400ms' }}>
             <p className="text-2xl md:text-3xl text-gray-400 mb-8">
-              Aspiring Full-Stack Developer
+              {hero.subtitle}
             </p>
           </div>
         </ParallaxElement>
@@ -110,9 +117,7 @@ export default function Hero() {
             mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`} style={{ transitionDelay: '600ms' }}>
             <p className="text-gray-300 text-xl max-w-4xl mx-auto mb-12 leading-relaxed">
-              Computer Science student at Carnegie Mellon University passionate about
-              building innovative solutions. Currently seeking software engineering internship
-              opportunities to apply my skills in full-stack development and AI.
+              {hero.description}
             </p>
           </div>
         </ParallaxElement>
@@ -131,15 +136,20 @@ export default function Hero() {
               <span className="relative mr-2">View My Work</span>
               <ChevronDown className="relative w-5 h-5 group-hover:translate-y-1 group-hover:animate-bounce transition-transform duration-300" />
             </Button>
-            <Button 
-              variant="outline" 
-              size="lg" 
-              className="border-gray-500 text-gray-300 hover:bg-gray-800 hover:border-gray-400 px-10 py-4 text-lg rounded-lg bg-transparent transform hover:scale-105 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 group relative overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-gray-800 to-slate-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <Download className="relative w-5 h-5 mr-2 group-hover:-translate-y-1 group-hover:rotate-12 transition-transform duration-300" />
-              <span className="relative">Download Resume</span>
-            </Button>
+            {hero.resumeUrl && (
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="border-gray-500 text-gray-300 hover:bg-gray-800 hover:border-gray-400 px-10 py-4 text-lg rounded-lg bg-transparent transform hover:scale-105 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 group relative overflow-hidden"
+                asChild
+              >
+                <a href={hero.resumeUrl} target="_blank" rel="noopener noreferrer">
+                  <div className="absolute inset-0 bg-gradient-to-r from-gray-800 to-slate-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <Download className="relative w-5 h-5 mr-2 group-hover:-translate-y-1 group-hover:rotate-12 transition-transform duration-300" />
+                  <span className="relative">Download Resume</span>
+                </a>
+              </Button>
+            )}
           </div>
         </ParallaxElement>
 
@@ -148,24 +158,24 @@ export default function Hero() {
           <div className={`flex justify-center space-x-8 transition-all duration-1000 ease-out ${
             mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`} style={{ transitionDelay: '1000ms' }}>
-            {[
-              { icon: Github, href: "https://github.com/KurthaTheBurtha", delay: 0 },
-              { icon: Linkedin, href: "https://www.linkedin.com/in/kurt-schimmel-67a27b252/", delay: 0.5 },
-              { icon: Mail, href: "mailto:kschimme@andrew.cmu.edu", delay: 1 }
-            ].map(({ icon: Icon, href, delay }, index) => (
-              <FloatingElement key={index} duration={4 + index} delay={delay} intensity={6}>
-                <a
-                  href={href}
-                  target={href.startsWith('http') ? '_blank' : undefined}
-                  rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  className="w-14 h-14 bg-slate-800 rounded-full flex items-center justify-center text-gray-400 hover:text-white hover:bg-slate-700 transform hover:scale-110 hover:-translate-y-3 hover:shadow-xl hover:shadow-blue-500/20 transition-all duration-300 group relative overflow-hidden"
-                  style={{ transitionDelay: `${delay * 100}ms` }}
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 rounded-full"></div>
-                  <Icon className="relative w-6 h-6 group-hover:rotate-12 transition-transform duration-300" />
-                </a>
-              </FloatingElement>
-            ))}
+            {hero.socialLinks.map(({ type, href }, index) => {
+              const Icon = iconMap[type as keyof typeof iconMap] || Github
+              const delay = index * 0.5
+              return (
+                <FloatingElement key={index} duration={4 + index} delay={delay} intensity={6}>
+                  <a
+                    href={href}
+                    target={href.startsWith('http') ? '_blank' : undefined}
+                    rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                    className="w-14 h-14 bg-slate-800 rounded-full flex items-center justify-center text-gray-400 hover:text-white hover:bg-slate-700 transform hover:scale-110 hover:-translate-y-3 hover:shadow-xl hover:shadow-blue-500/20 transition-all duration-300 group relative overflow-hidden"
+                    style={{ transitionDelay: `${delay * 100}ms` }}
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 rounded-full"></div>
+                    <Icon className="relative w-6 h-6 group-hover:rotate-12 transition-transform duration-300" />
+                  </a>
+                </FloatingElement>
+              )
+            })}
           </div>
         </ParallaxElement>
       </ParallaxElement>

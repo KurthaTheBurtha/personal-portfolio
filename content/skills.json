@@ -1,0 +1,12 @@
+{
+  "heading": "Technical Skills",
+  "subheading": "A comprehensive toolkit built through hands-on experience and continuous learning",
+  "categories": [
+    { "title": "Programming Languages", "icon": "Code", "color": "bg-blue-600", "skills": ["Java", "Python", "C++", "C", "JavaScript", "Go", "HTML", "CSS", "SQL"] },
+    { "title": "Frameworks & Libraries", "icon": "Globe", "color": "bg-green-600", "skills": ["React", "Node.js", "Express", "Django", "Flutter", "TailwindCSS"] },
+    { "title": "Databases & Cloud", "icon": "Database", "color": "bg-purple-600", "skills": ["PostgreSQL", "MySQL", "MongoDB", "Firebase", "AWS", "Git"] },
+    { "title": "AI & Machine Learning", "icon": "Brain", "color": "bg-orange-600", "skills": ["OpenCV", "Linear Regression", "Computer Vision", "Data Analysis"] },
+    { "title": "Mobile Development", "icon": "Smartphone", "color": "bg-pink-600", "skills": ["Flutter", "Dart", "Mobile UI/UX", "Cross-platform Development"] },
+    { "title": "Tools & Technologies", "icon": "Wrench", "color": "bg-blue-600", "skills": ["Git", "Confluence", "Stripe API", "RESTful APIs", "Agile Development"] }
+  ]
+} 

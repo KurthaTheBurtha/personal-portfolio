@@ -1,0 +1,19 @@
+{
+  "qualitiesHeading": "Professional Qualities",
+  "qualities": [
+    "Problem Solving",
+    "Team Collaboration",
+    "Time Management",
+    "Leadership",
+    "Communication",
+    "Adaptability",
+    "Critical Thinking",
+    "Project Management"
+  ],
+  "languagesHeading": "Languages",
+  "languages": [
+    { "name": "English", "level": "Native" },
+    { "name": "German", "level": "Bilingual Fluent" },
+    { "name": "Chinese", "level": "Bilingual Fluent" }
+  ]
+} 

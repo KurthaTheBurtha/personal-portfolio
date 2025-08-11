@@ -19,7 +19,7 @@ export default function AnimatedCounter({
   className = ""
 }: AnimatedCounterProps) {
   const [count, setCount] = useState(0)
-  const { ref, hasIntersected } = useIntersectionObserver()
+  const { ref, hasIntersected } = useIntersectionObserver<HTMLSpanElement>()
 
   useEffect(() => {
     if (!hasIntersected) return

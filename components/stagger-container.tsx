@@ -14,7 +14,7 @@ export default function StaggerContainer({
   className = "",
   staggerDelay = 100
 }: StaggerContainerProps) {
-  const { ref, hasIntersected } = useIntersectionObserver()
+  const { ref, hasIntersected } = useIntersectionObserver<HTMLDivElement>()
 
   return (
     <div ref={ref} className={className}>

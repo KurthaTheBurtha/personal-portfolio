@@ -5,30 +5,20 @@ import AnimatedSection from './animated-section'
 import StaggerContainer from './stagger-container'
 import ParallaxElement from './parallax-element'
 import FloatingElement from './floating-element'
+import about from '@/content/about.json'
+
+const iconMap = {
+  GraduationCap,
+  Code,
+  Target,
+  Award,
+} as const
 
 export default function About() {
-  const infoCards = [
-    {
-      icon: <GraduationCap className="w-6 h-6 text-blue-400" />,
-      title: "Education",
-      description: "Carnegie Mellon University - BS Information Systems with AI Minor"
-    },
-    {
-      icon: <Code className="w-6 h-6 text-green-400" />,
-      title: "Experience", 
-      description: "Full-Stack Developer with enterprise-grade project experience"
-    },
-    {
-      icon: <Target className="w-6 h-6 text-purple-400" />,
-      title: "Focus",
-      description: "Building scalable solutions with modern technologies"
-    },
-    {
-      icon: <Award className="w-6 h-6 text-orange-400" />,
-      title: "Achievement",
-      description: "Varsity athlete balancing academics and 30+ hour commitments"
-    }
-  ]
+  const infoCards = about.infoCards.map(card => ({
+    ...card,
+    Icon: iconMap[card.icon as keyof typeof iconMap] || Code,
+  }))
 
   return (
     <section id="about" className="py-20 bg-slate-900 relative overflow-hidden">
@@ -50,11 +40,11 @@ export default function About() {
         <ParallaxElement speed={0.1}>
           <AnimatedSection className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              About <span className="text-blue-400">Me</span>
+              {about.heading.split(' ')[0]} <span className="text-blue-400">{about.heading.split(' ').slice(1).join(' ') || 'Me'}</span>
             </h2>
             <div className="w-20 h-1 bg-blue-400 mx-auto mb-6"></div>
             <p className="text-xl text-gray-400">
-              Passionate Developer & Problem Solver
+              {about.tagline}
             </p>
           </AnimatedSection>
         </ParallaxElement>
@@ -63,56 +53,24 @@ export default function About() {
           {/* Left Content with subtle parallax */}
           <ParallaxElement speed={0.05}>
             <div className="space-y-6">
-              <AnimatedSection delay={200}>
-                <p className="text-gray-300 text-lg leading-relaxed">
-                  I'm a Computer Science student at Carnegie Mellon University with
-                  a passion for creating innovative software solutions. My journey in
-                  tech began with curiosity about how things work, and has evolved
-                  into a deep love for building applications that make a real impact.
-                </p>
-              </AnimatedSection>
-              
-              <AnimatedSection delay={400}>
-                <p className="text-gray-300 text-lg leading-relaxed">
-                  Currently pursuing a Bachelor of Science in Information Systems
-                  with an additional minor in Artificial Intelligence, I've gained hands-
-                  on experience developing enterprise-grade applications, from
-                  payment portals handling $100k+ in transactions to AI-powered
-                  tools serving 50+ users.
-                </p>
-              </AnimatedSection>
-              
-              <AnimatedSection delay={600}>
-                <p className="text-gray-300 text-lg leading-relaxed">
-                  As a varsity athlete, I've learned to balance demanding schedules
-                  while maintaining excellence in both academics and athletics. This
-                  experience has taught me valuable skills in time management,
-                  teamwork, and perseverance that I bring to every project.
-                </p>
-              </AnimatedSection>
+              {about.paragraphs.map((p, idx) => (
+                <AnimatedSection key={idx} delay={200 * (idx + 1)}>
+                  <p className="text-gray-300 text-lg leading-relaxed">{p}</p>
+                </AnimatedSection>
+              ))}
 
               <AnimatedSection delay={800}>
                 <div className="pt-6">
                   <h3 className="text-xl font-semibold text-white mb-4">What drives me:</h3>
                   <StaggerContainer className="space-y-3" staggerDelay={150}>
-                    <div className="flex items-center text-gray-300 group">
-                      <FloatingElement duration={3} intensity={3} className="mr-3">
-                        <div className="w-2 h-2 bg-blue-400 rounded-full group-hover:scale-150 transition-transform duration-300"></div>
-                      </FloatingElement>
-                      Building scalable, user-focused applications
-                    </div>
-                    <div className="flex items-center text-gray-300 group">
-                      <FloatingElement duration={3.5} delay={0.5} intensity={3} className="mr-3">
-                        <div className="w-2 h-2 bg-purple-400 rounded-full group-hover:scale-150 transition-transform duration-300"></div>
-                      </FloatingElement>
-                      Exploring the intersection of AI and web development
-                    </div>
-                    <div className="flex items-center text-gray-300 group">
-                      <FloatingElement duration={4} delay={1} intensity={3} className="mr-3">
-                        <div className="w-2 h-2 bg-green-400 rounded-full group-hover:scale-150 transition-transform duration-300"></div>
-                      </FloatingElement>
-                      Continuous learning and staying current with tech trends
-                    </div>
+                    {about.drivers.map((d, idx) => (
+                      <div key={idx} className="flex items-center text-gray-300 group">
+                        <FloatingElement duration={3} intensity={3} className="mr-3">
+                          <div className="w-2 h-2 bg-blue-400 rounded-full group-hover:scale-150 transition-transform duration-300"></div>
+                        </FloatingElement>
+                        {d}
+                      </div>
+                    ))}
                   </StaggerContainer>
                 </div>
               </AnimatedSection>
@@ -133,7 +91,7 @@ export default function About() {
                     <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <div className="flex items-start space-x-4 relative z-10">
                       <div className="flex-shrink-0 group-hover:scale-110 group-hover:rotate-12 transition-transform duration-300">
-                        {card.icon}
+                        <card.Icon className="w-6 h-6 text-blue-400" />
                       </div>
                       <div>
                         <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-blue-400 transition-colors duration-300">

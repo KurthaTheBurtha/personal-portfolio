@@ -4,24 +4,11 @@ import AnimatedSection from './animated-section'
 import StaggerContainer from './stagger-container'
 import ParallaxElement from './parallax-element'
 import FloatingElement from './floating-element'
+import qualitiesContent from '@/content/qualities.json'
 
 export default function ProfessionalQualities() {
-  const qualities = [
-    "Problem Solving",
-    "Team Collaboration", 
-    "Time Management",
-    "Leadership",
-    "Communication",
-    "Adaptability",
-    "Critical Thinking",
-    "Project Management"
-  ]
-
-  const languages = [
-    { name: "English", level: "Native" },
-    { name: "German", level: "Bilingual Fluent" },
-    { name: "Chinese", level: "Bilingual Fluent" }
-  ]
+  const qualities = qualitiesContent.qualities
+  const languages = qualitiesContent.languages
 
   return (
     <section className="py-20 bg-slate-900 relative overflow-hidden">
@@ -46,7 +33,7 @@ export default function ProfessionalQualities() {
         <ParallaxElement speed={0.08}>
           <AnimatedSection className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              Professional <span className="text-blue-400">Qualities</span>
+              {qualitiesContent.qualitiesHeading.split(' ')[0]} <span className="text-blue-400">{qualitiesContent.qualitiesHeading.split(' ').slice(1).join(' ')}</span>
             </h2>
             <div className="w-20 h-1 bg-blue-400 mx-auto mb-8"></div>
             <p className="text-xl text-gray-400 max-w-4xl mx-auto mb-12">
@@ -85,7 +72,7 @@ export default function ProfessionalQualities() {
         <ParallaxElement speed={0.06}>
           <AnimatedSection className="text-center" delay={400}>
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-12">
-              <span className="text-blue-400">Languages</span>
+              <span className="text-blue-400">{qualitiesContent.languagesHeading}</span>
             </h2>
           </AnimatedSection>
           

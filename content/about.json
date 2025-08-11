@@ -1,0 +1,20 @@
+{
+  "heading": "About Me",
+  "tagline": "Passionate Developer & Problem Solver",
+  "paragraphs": [
+    "I'm a Computer Science student at Carnegie Mellon University with a passion for creating innovative software solutions. My journey in tech began with curiosity about how things work, and has evolved into a deep love for building applications that make a real impact.",
+    "Currently pursuing a Bachelor of Science in Information Systems with an additional minor in Artificial Intelligence, I've gained hands-on experience developing enterprise-grade applications, from payment portals handling $100k+ in transactions to AI-powered tools serving 50+ users.",
+    "As a varsity athlete, I've learned to balance demanding schedules while maintaining excellence in both academics and athletics. This experience has taught me valuable skills in time management, teamwork, and perseverance that I bring to every project."
+  ],
+  "drivers": [
+    "Building scalable, user-focused applications",
+    "Exploring the intersection of AI and web development",
+    "Continuous learning and staying current with tech trends"
+  ],
+  "infoCards": [
+    { "icon": "GraduationCap", "title": "Education", "description": "Carnegie Mellon University - BS Information Systems with AI Minor" },
+    { "icon": "Code", "title": "Experience", "description": "Full-Stack Developer with enterprise-grade project experience" },
+    { "icon": "Target", "title": "Focus", "description": "Building scalable solutions with modern technologies" },
+    { "icon": "Award", "title": "Achievement", "description": "Varsity athlete balancing academics and 30+ hour commitments" }
+  ]
+} 

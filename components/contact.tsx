@@ -10,12 +10,6 @@ import ParallaxElement from './parallax-element'
 import FloatingElement from './floating-element'
 
 export default function Contact() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
-  })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
   const [statusMessage, setStatusMessage] = useState('')
@@ -38,45 +32,8 @@ export default function Contact() {
     }
   ]
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }))
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-    setSubmitStatus('idle')
-
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      })
-
-      const result = await response.json()
-
-      if (response.ok) {
-        setSubmitStatus('success')
-        setStatusMessage('Thank you! Your message has been sent successfully.')
-        setFormData({ name: '', email: '', subject: '', message: '' })
-      } else {
-        setSubmitStatus('error')
-        setStatusMessage(result.error || 'Something went wrong. Please try again.')
-      }
-    } catch (error) {
-      setSubmitStatus('error')
-      setStatusMessage('Network error. Please check your connection and try again.')
-    } finally {
-      setIsSubmitting(false)
-    }
-  }
+  // Replace with your Formspree (or similar) endpoint URL
+  const formAction = "https://formspree.io/f/your_form_id"
 
   return (
     <section id="contact" className="py-20 bg-slate-900 relative overflow-hidden">
@@ -197,7 +154,15 @@ export default function Contact() {
               <h3 className="text-2xl font-bold text-white mb-6">Send a Message</h3>
             </AnimatedSection>
             
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form
+              action={formAction}
+              method="POST"
+              onSubmit={() => {
+                setIsSubmitting(true)
+                setSubmitStatus('idle')
+              }}
+              className="space-y-6"
+            >
               <AnimatedSection delay={400} animation="slide-left">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <FloatingElement duration={4} delay={0} intensity={2}>
@@ -207,8 +172,6 @@ export default function Contact() {
                       </label>
                       <Input
                         name="name"
-                        value={formData.name}
-                        onChange={handleInputChange}
                         placeholder="Your full name"
                         className="bg-slate-800 border-slate-700 text-white placeholder-gray-400 focus:border-blue-400 hover:border-slate-600 transition-all duration-300"
                         required
@@ -223,8 +186,6 @@ export default function Contact() {
                       <Input
                         name="email"
                         type="email"
-                        value={formData.email}
-                        onChange={handleInputChange}
                         placeholder="your.email@example.com"
                         className="bg-slate-800 border-slate-700 text-white placeholder-gray-400 focus:border-blue-400 hover:border-slate-600 transition-all duration-300"
                         required
@@ -242,8 +203,6 @@ export default function Contact() {
                     </label>
                     <Input
                       name="subject"
-                      value={formData.subject}
-                      onChange={handleInputChange}
                       placeholder="What's this about?"
                       className="bg-slate-800 border-slate-700 text-white placeholder-gray-400 focus:border-blue-400 hover:border-slate-600 transition-all duration-300"
                       required
@@ -260,8 +219,6 @@ export default function Contact() {
                     </label>
                     <Textarea
                       name="message"
-                      value={formData.message}
-                      onChange={handleInputChange}
                       placeholder="Tell me about your project, internship opportunity, or just say hello!"
                       rows={6}
                       className="bg-slate-800 border-slate-700 text-white placeholder-gray-400 focus:border-blue-400 hover:border-slate-600 transition-all duration-300 resize-none"
@@ -271,7 +228,7 @@ export default function Contact() {
                 </FloatingElement>
               </AnimatedSection>
 
-              {/* Status Message */}
+              {/* Status Message (client-only hint; actual success handled by provider redirect/email) */}
               {submitStatus !== 'idle' && (
                 <AnimatedSection animation="fade-in">
                   <div className={`flex items-center gap-2 p-4 rounded-lg ${

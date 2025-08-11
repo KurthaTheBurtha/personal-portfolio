@@ -1,46 +1,15 @@
 "use client"
 
 import { Code, Globe, Database, Brain, Smartphone, Wrench } from 'lucide-react'
+import skillsContent from '@/content/skills.json'
+
+const iconMap = { Code, Globe, Database, Brain, Smartphone, Wrench } as const
 
 export default function Skills() {
-  const skillCategories = [
-    {
-      title: "Programming Languages",
-      icon: <Code className="w-8 h-8" />,
-      color: "bg-blue-600",
-      skills: ["Java", "Python", "C++", "C", "JavaScript", "Go", "HTML", "CSS", "SQL"]
-    },
-    {
-      title: "Frameworks & Libraries", 
-      icon: <Globe className="w-8 h-8" />,
-      color: "bg-green-600",
-      skills: ["React", "Node.js", "Express", "Django", "Flutter", "TailwindCSS"]
-    },
-    {
-      title: "Databases & Cloud",
-      icon: <Database className="w-8 h-8" />,
-      color: "bg-purple-600", 
-      skills: ["PostgreSQL", "MySQL", "MongoDB", "Firebase", "AWS", "Git"]
-    },
-    {
-      title: "AI & Machine Learning",
-      icon: <Brain className="w-8 h-8" />,
-      color: "bg-orange-600",
-      skills: ["OpenCV", "Linear Regression", "Computer Vision", "Data Analysis"]
-    },
-    {
-      title: "Mobile Development",
-      icon: <Smartphone className="w-8 h-8" />,
-      color: "bg-pink-600",
-      skills: ["Flutter", "Dart", "Mobile UI/UX", "Cross-platform Development"]
-    },
-    {
-      title: "Tools & Technologies",
-      icon: <Wrench className="w-8 h-8" />,
-      color: "bg-blue-600",
-      skills: ["Git", "Confluence", "Stripe API", "RESTful APIs", "Agile Development"]
-    }
-  ]
+  const skillCategories = skillsContent.categories.map(cat => ({
+    ...cat,
+    Icon: iconMap[cat.icon as keyof typeof iconMap] || Code,
+  }))
 
   return (
     <section id="skills" className="py-20 bg-slate-900">
@@ -48,11 +17,11 @@ export default function Skills() {
         {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Technical <span className="text-blue-400">Skills</span>
+            {skillsContent.heading.split(' ')[0]} <span className="text-blue-400">{skillsContent.heading.split(' ').slice(1).join(' ')}</span>
           </h2>
           <div className="w-20 h-1 bg-blue-400 mx-auto mb-6"></div>
           <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-            A comprehensive toolkit built through hands-on experience and continuous learning
+            {skillsContent.subheading}
           </p>
         </div>
 
@@ -67,7 +36,7 @@ export default function Skills() {
               <div className="flex items-center mb-6">
                 <div className={`${category.color} p-3 rounded-lg mr-4`}>
                   <div className="text-white">
-                    {category.icon}
+                    <category.Icon className="w-8 h-8" />
                   </div>
                 </div>
                 <h3 className="text-lg font-semibold text-white">

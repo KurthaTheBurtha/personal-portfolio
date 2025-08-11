@@ -5,66 +5,12 @@ import { ExternalLink, Github, DollarSign, Users, Zap, Star } from 'lucide-react
 import Image from "next/image"
 import AnimatedSection from './animated-section'
 import AnimatedCounter from './animated-counter'
+import projectsContent from '@/content/projects.json'
+
+const iconMap = { DollarSign, Users, Zap, Star } as const
 
 export default function Projects() {
-  const projects = [
-    {
-      title: "Waprep Tuition Portal",
-      period: "May 2025 - Present",
-      status: "Production",
-      statusColor: "bg-blue-600",
-      description: "Enterprise-grade full-stack payment portal serving 50+ families at Washington Preparatory School, improving payment efficiency and accessibility by 60%.",
-      metrics: [
-        { icon: <DollarSign className="w-4 h-4" />, text: "$", counter: 100, suffix: "k+ annual payments processed" },
-        { icon: <Users className="w-4 h-4" />, text: "", counter: 50, suffix: "+ families served" },
-        { icon: <Zap className="w-4 h-4" />, text: "", counter: 60, suffix: "% efficiency improvement" }
-      ],
-      technologies: ["React", "Node.js", "Stripe API", "PostgreSQL", "Express"],
-      image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/featured%20projects-hiCpBtrjqhJwoNcTa8UisfichwMQWb.png"
-    },
-    {
-      title: "Hurdle Touchdown Time Finder", 
-      period: "Nov 2024 - Dec 2024",
-      status: "Completed",
-      statusColor: "bg-green-600",
-      description: "Advanced computer vision tool using OpenCV for frame-by-frame video analysis, achieving >95% timing accuracy for hurdle race performance analysis.",
-      metrics: [
-        { icon: <Zap className="w-4 h-4" />, text: ">", counter: 95, suffix: "% timing accuracy" },
-        { icon: <Users className="w-4 h-4" />, text: "±", counter: 0.3, suffix: " second precision" },
-        { icon: <Star className="w-4 h-4" />, text: "", counter: 110, suffix: "m hurdle race analysis" }
-      ],
-      technologies: ["Python", "OpenCV", "Machine Learning", "Linear Regression"],
-      image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/hurdle%20touchdown%20finder-Vsb32jqkNPDcsnJGhBmzn1hm0i151I.png"
-    },
-    {
-      title: "AI Teaching Assistant",
-      period: "Apr 2024 - Aug 2024", 
-      status: "Completed",
-      statusColor: "bg-green-600",
-      description: "Developed a COPPA-compliant PII detection system during an internship at Teachally.com, integrated into student onboarding workflows, supporting 50+ student accounts per classroom for K-12 use.",
-      metrics: [
-        { icon: <Users className="w-4 h-4" />, text: "", counter: 50, suffix: "+ students per classroom" },
-        { icon: <Zap className="w-4 h-4" />, text: "COPPA-compliant design", counter: 0, suffix: "" },
-        { icon: <Star className="w-4 h-4" />, text: "K-12 education focus", counter: 0, suffix: "" }
-      ],
-      technologies: ["Go", "Flutter", "AI/ML", "Privacy Compliance"],
-      image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ai%20teaching%20assistant-KXjNHaaOu1vQE5vehd3kU5KE628kZd.png"
-    },
-    {
-      title: "Free Lance Web Services",
-      period: "Sep 2023 - Current",
-      status: "Ongoing", 
-      statusColor: "bg-orange-600",
-      description: "Custom website development for local businesses, including athlete registration systems and restaurant sites with modern UX/UI design.",
-      metrics: [
-        { icon: <Users className="w-4 h-4" />, text: "", counter: 80, suffix: "+ athlete registrations" },
-        { icon: <Zap className="w-4 h-4" />, text: "", counter: 500, suffix: "+ residents benefited" },
-        { icon: <Star className="w-4 h-4" />, text: "", counter: 4.3, suffix: "-star Google reviews" }
-      ],
-      technologies: ["HTML", "CSS", "JavaScript", "React", "Responsive Design"],
-      image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/free%20lance%20ws-Eiu1wi16BEjBU9cTBnDuEDr7h5nwOX.png"
-    }
-  ]
+  const projects = projectsContent.projects
 
   return (
     <section id="projects" className="py-20 bg-slate-900">
@@ -72,11 +18,11 @@ export default function Projects() {
         {/* Section Header */}
         <AnimatedSection className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Featured <span className="text-blue-400">Projects</span>
+            {projectsContent.heading.split(' ')[0]} <span className="text-blue-400">{projectsContent.heading.split(' ').slice(1).join(' ')}</span>
           </h2>
           <div className="w-20 h-1 bg-blue-400 mx-auto mb-6"></div>
           <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-            A showcase of my technical skills and problem-solving abilities through real-world applications
+            {projectsContent.subheading}
           </p>
         </AnimatedSection>
 
@@ -124,24 +70,27 @@ export default function Projects() {
 
                 {/* Metrics */}
                 <div className="space-y-3">
-                  {project.metrics.map((metric, metricIndex) => (
-                    <div key={metricIndex} className="flex items-center text-gray-300 group hover:text-blue-400 transition-colors duration-300">
-                      <div className="text-blue-400 mr-3 group-hover:scale-125 transition-transform duration-300">
-                        {metric.icon}
+                  {project.metrics.map((metric, metricIndex) => {
+                    const Icon = iconMap[metric.icon as keyof typeof iconMap] || Zap
+                    return (
+                      <div key={metricIndex} className="flex items-center text-gray-300 group hover:text-blue-400 transition-colors duration-300">
+                        <div className="text-blue-400 mr-3 group-hover:scale-125 transition-transform duration-300">
+                          <Icon className="w-4 h-4" />
+                        </div>
+                        <span>
+                          {metric.text}
+                          {metric.counter > 0 && (
+                            <AnimatedCounter 
+                              end={metric.counter} 
+                              duration={2000}
+                              className="font-semibold"
+                            />
+                          )}
+                          {metric.suffix}
+                        </span>
                       </div>
-                      <span>
-                        {metric.text}
-                        {metric.counter > 0 && (
-                          <AnimatedCounter 
-                            end={metric.counter} 
-                            duration={2000}
-                            className="font-semibold"
-                          />
-                        )}
-                        {metric.suffix}
-                      </span>
-                    </div>
-                  ))}
+                    )
+                  })}
                 </div>
 
                 {/* Technologies */}
