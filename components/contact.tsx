@@ -111,10 +111,10 @@ export default function Contact() {
           </AnimatedSection>
         </ParallaxElement>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
           {/* Left Side - Contact Info with slide-in animations */}
           <ParallaxElement speed={0.05}>
-            <div>
+            <div className="h-full flex flex-col">
               <AnimatedSection delay={200} animation="slide-right">
                 <h3 className="text-2xl font-bold text-white mb-6">Let's Connect</h3>
                 <p className="text-gray-300 text-lg mb-8 leading-relaxed">
@@ -126,7 +126,7 @@ export default function Contact() {
               </AnimatedSection>
 
               {/* Contact Information with staggered slide-in */}
-              <div className="space-y-6 mb-8">
+              <div className="space-y-6 mb-8 flex-1">
                 {contactInfo.map((info, index) => (
                   <AnimatedSection
                     key={index}
@@ -149,7 +149,7 @@ export default function Contact() {
                 ))}
               </div>
 
-              <AnimatedSection delay={800} animation="slide-right">
+              <AnimatedSection delay={800} animation="slide-right" className="mt-auto">
                 <div>
                   <h4 className="text-xl font-semibold text-white mb-4">Find me online</h4>
                   <div className="flex gap-4">
@@ -193,11 +193,12 @@ export default function Contact() {
 
           {/* Right Side - Contact Form with slide-in from left */}
           <ParallaxElement speed={0.08} direction="down">
-            <AnimatedSection delay={300} animation="slide-left">
-              <h3 className="text-2xl font-bold text-white mb-6">Send a Message</h3>
-            </AnimatedSection>
-            
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="h-full flex flex-col">
+              <AnimatedSection delay={300} animation="slide-left">
+                <h3 className="text-2xl font-bold text-white mb-6">Send a Message</h3>
+              </AnimatedSection>
+              
+              <form onSubmit={handleSubmit} className="space-y-6 flex-1 flex flex-col">
               <AnimatedSection delay={400} animation="slide-left">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <FloatingElement duration={4} delay={0} intensity={2}>
@@ -289,7 +290,7 @@ export default function Contact() {
                 </AnimatedSection>
               )}
 
-              <AnimatedSection delay={700} animation="slide-left">
+              <AnimatedSection delay={700} animation="slide-left" className="mt-auto">
                 <FloatingElement duration={3} delay={0.5} intensity={3}>
                   <Button 
                     type="submit"
@@ -314,6 +315,7 @@ export default function Contact() {
                 </FloatingElement>
               </AnimatedSection>
             </form>
+            </div>
           </ParallaxElement>
         </div>
       </div>

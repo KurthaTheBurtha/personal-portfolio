@@ -16,7 +16,7 @@ export default function AnimatedSection({
   delay = 0,
   animation = 'fade-up'
 }: AnimatedSectionProps) {
-  const { ref, hasIntersected } = useIntersectionObserver({
+  const { ref, hasIntersected } = useIntersectionObserver<HTMLDivElement>({
     threshold: 0.1,
     rootMargin: '0px 0px -50px 0px'
   })
