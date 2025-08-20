@@ -5,6 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "export": "next build && next export",
+    "deploy:hostinger": "npm run build && node deploy-hostinger.js",
+    "setup-media": "node upload-media.js",
     "start": "next start",
     "lint": "next lint"
   },

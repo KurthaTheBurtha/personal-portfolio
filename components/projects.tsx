@@ -1,12 +1,16 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { ExternalLink, Github, DollarSign, Users, Zap, Star } from 'lucide-react'
+import { ExternalLink, Github, DollarSign, Users, Zap, Star, Play, Pause } from 'lucide-react'
 import Image from "next/image"
 import AnimatedSection from './animated-section'
 import AnimatedCounter from './animated-counter'
+import { useState } from 'react'
 
 export default function Projects() {
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false)
+  const [currentProject, setCurrentProject] = useState<number | null>(null)
+
   const projects = [
     {
       title: "Waprep Tuition Portal",
@@ -19,8 +23,11 @@ export default function Projects() {
         { icon: <Users className="w-4 h-4" />, text: "", counter: 50, suffix: "+ families served" },
         { icon: <Zap className="w-4 h-4" />, text: "", counter: 60, suffix: "% efficiency improvement" }
       ],
-      technologies: ["React", "Node.js", "Stripe API", "PostgreSQL", "Express"],
-      image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/featured%20projects-hiCpBtrjqhJwoNcTa8UisfichwMQWb.png"
+             technologies: ["Python", "Django", "HTML", "Shell", "PostgreSQL"],
+      image: "/tuition portal.png",
+             hasVideo: true,
+       videoUrl: "https://www.youtube.com/watch?v=FnSUoJcxdro",
+       isYouTube: true
     },
     {
       title: "Hurdle Touchdown Time Finder", 
@@ -33,37 +40,44 @@ export default function Projects() {
         { icon: <Users className="w-4 h-4" />, text: "±", counter: 0.3, suffix: " second precision" },
         { icon: <Star className="w-4 h-4" />, text: "", counter: 110, suffix: "m hurdle race analysis" }
       ],
-      technologies: ["Python", "OpenCV", "Machine Learning", "Linear Regression"],
-      image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/hurdle%20touchdown%20finder-Vsb32jqkNPDcsnJGhBmzn1hm0i151I.png"
+             technologies: ["Python", "OpenCV", "CMU Graphics", "Pillow"],
+      image: "/hurdle touchdown time finder.png",
+             hasVideo: true,
+       videoUrl: "https://www.youtube.com/watch?v=kS0t_Gu8U4M",
+       isYouTube: true
     },
-    {
-      title: "AI Teaching Assistant",
-      period: "Apr 2024 - Aug 2024", 
-      status: "Completed",
-      statusColor: "bg-green-600",
-      description: "Developed a COPPA-compliant PII detection system during an internship at Teachally.com, integrated into student onboarding workflows, supporting 50+ student accounts per classroom for K-12 use.",
-      metrics: [
-        { icon: <Users className="w-4 h-4" />, text: "", counter: 50, suffix: "+ students per classroom" },
-        { icon: <Zap className="w-4 h-4" />, text: "COPPA-compliant design", counter: 0, suffix: "" },
-        { icon: <Star className="w-4 h-4" />, text: "K-12 education focus", counter: 0, suffix: "" }
-      ],
-      technologies: ["Go", "Flutter", "AI/ML", "Privacy Compliance"],
-      image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ai%20teaching%20assistant-KXjNHaaOu1vQE5vehd3kU5KE628kZd.png"
-    },
-    {
-      title: "Free Lance Web Services",
-      period: "Sep 2023 - Current",
-      status: "Ongoing", 
-      statusColor: "bg-orange-600",
-      description: "Custom website development for local businesses, including athlete registration systems and restaurant sites with modern UX/UI design.",
-      metrics: [
-        { icon: <Users className="w-4 h-4" />, text: "", counter: 80, suffix: "+ athlete registrations" },
-        { icon: <Zap className="w-4 h-4" />, text: "", counter: 500, suffix: "+ residents benefited" },
-        { icon: <Star className="w-4 h-4" />, text: "", counter: 4.3, suffix: "-star Google reviews" }
-      ],
-      technologies: ["HTML", "CSS", "JavaScript", "React", "Responsive Design"],
-      image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/free%20lance%20ws-Eiu1wi16BEjBU9cTBnDuEDr7h5nwOX.png"
-    }
+         {
+       title: "Campus Geography Guesser Game",
+       period: "Dec 2024",
+       status: "3rd Place - CMU Hack112", 
+       statusColor: "bg-purple-600",
+               description: "Interactive geography game inspired by GeoGuessr using Python and Google Street View API. Features real-world campus locations with custom scoring algorithm for player accuracy based on geographic proximity. Includes virtual map interface for enhanced gameplay immersion.",
+       metrics: [
+         { icon: <Star className="w-4 h-4" />, text: "", counter: 3, suffix: "rd Place Hackathon Winner" },
+         { icon: <Zap className="w-4 h-4" />, text: "Google Street View API", counter: 0, suffix: " integration" },
+         { icon: <Users className="w-4 h-4" />, text: "Custom scoring algorithm", counter: 0, suffix: "" }
+       ],
+               technologies: ["Python", "Google Maps API", "Geolocation", "Game Logic", "Hackathon"],
+        image: "/campusguessr.png",
+       hasVideo: true,
+       videoUrl: "https://www.youtube.com/watch?v=XmyT57wW0Uw",
+       isYouTube: true
+     },
+     {
+       title: "AI Teaching Assistant",
+       period: "Apr 2024 - Aug 2024", 
+       status: "Completed",
+       statusColor: "bg-green-600",
+       description: "Developed a COPPA-compliant PII detection system during an internship at Teachally.com, integrated into student onboarding workflows, supporting 50+ student accounts per classroom for K-12 use.",
+       metrics: [
+         { icon: <Users className="w-4 h-4" />, text: "", counter: 50, suffix: "+ students per classroom" },
+         { icon: <Zap className="w-4 h-4" />, text: "COPPA-compliant design", counter: 0, suffix: "" },
+         { icon: <Star className="w-4 h-4" />, text: "K-12 education focus", counter: 0, suffix: "" }
+       ],
+       technologies: ["Go", "Flutter", "AI/ML", "Privacy Compliance"],
+       image: "/teachally.png",
+       hasVideo: false
+     }
   ]
 
   return (
@@ -90,21 +104,74 @@ export default function Projects() {
                 index % 2 === 1 ? 'lg:grid-flow-col-dense' : ''
               }`}
             >
-              {/* Project Image */}
+              {/* Project Image/Video */}
               <div className={`lg:col-span-3 ${index % 2 === 1 ? 'lg:col-start-3' : ''}`}>
                 <div className="relative h-96 rounded-lg overflow-hidden group cursor-pointer">
-                  <Image
-                    src={project.image || "/placeholder.svg"}
-                    alt={project.title}
-                    fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-700"
-                  />
+                  {currentProject === index && isVideoPlaying ? (
+                                         project.isYouTube ? (
+                       <iframe
+                         src={`https://www.youtube.com/embed/${project.videoUrl.split('v=')[1]}?autoplay=1&mute=1&loop=1&playlist=${project.videoUrl.split('v=')[1]}`}
+                         className="w-full h-full"
+                         frameBorder="0"
+                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                         allowFullScreen
+                       />
+                    ) : (
+                      <video
+                        src={project.videoUrl}
+                        className="w-full h-full object-cover"
+                        autoPlay
+                        loop
+                        muted
+                        onEnded={() => setIsVideoPlaying(false)}
+                      />
+                    )
+                  ) : (
+                    <Image
+                      src={project.image || "/placeholder.svg"}
+                      alt={project.title}
+                      fill
+                      className="object-cover group-hover:scale-110 transition-transform duration-700"
+                    />
+                  )}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   <div className="absolute top-4 right-4">
                     <span className={`${project.statusColor} text-white px-3 py-1 rounded-full text-sm font-medium transform group-hover:scale-110 transition-transform duration-300`}>
                       {project.status}
                     </span>
                   </div>
+                  
+                  {/* Video Play Button */}
+                  {project.hasVideo && currentProject !== index && (
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          setCurrentProject(index)
+                          setIsVideoPlaying(true)
+                        }}
+                        className="bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full transform hover:scale-110 transition-all duration-300 shadow-lg"
+                      >
+                        <Play className="w-8 h-8 ml-1" />
+                      </button>
+                    </div>
+                  )}
+                  
+                  {/* Video Pause/Stop Button */}
+                  {currentProject === index && isVideoPlaying && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          setIsVideoPlaying(false)
+                          setCurrentProject(null)
+                        }}
+                        className="bg-red-600 hover:bg-red-700 text-white p-4 rounded-full transform hover:scale-110 transition-all duration-300 shadow-lg z-10"
+                      >
+                        <Pause className="w-8 h-8" />
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -159,17 +226,83 @@ export default function Projects() {
                   </div>
                 </div>
 
-                {/* Action Buttons */}
-                <div className="flex gap-4">
-                  <Button className="bg-blue-600 hover:bg-blue-700 text-white transform hover:scale-105 hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/25 transition-all duration-300 group">
-                    <ExternalLink className="w-4 h-4 mr-2 group-hover:rotate-45 transition-transform duration-300" />
-                    Live Demo
-                  </Button>
-                  <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-gray-800 hover:border-gray-400 transform hover:scale-105 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group">
-                    <Github className="w-4 h-4 mr-2 group-hover:rotate-12 transition-transform duration-300" />
-                    View Code
-                  </Button>
-                </div>
+                                 {/* Action Buttons */}
+                 <div className="flex gap-4">
+                   {project.title === "AI Teaching Assistant" ? (
+                     <Button 
+                       onClick={() => window.open('https://teachally.com/', '_blank')}
+                       className="bg-blue-600 hover:bg-blue-700 text-white transform hover:scale-105 hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/25 transition-all duration-300 group"
+                     >
+                       <ExternalLink className="w-4 h-4 mr-2 group-hover:rotate-45 transition-transform duration-300" />
+                       Visit Teachally
+                     </Button>
+                                                                               ) : project.title === "Campus Geography Guesser Game" ? (
+                       <>
+                         <Button 
+                           onClick={() => window.open('https://www.youtube.com/watch?v=XmyT57wW0Uw', '_blank')}
+                           className="bg-blue-600 hover:bg-blue-700 text-white transform hover:scale-105 hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/25 transition-all duration-300 group"
+                         >
+                           <ExternalLink className="w-4 h-4 mr-2 group-hover:rotate-45 transition-transform duration-300" />
+                           Live Demo
+                         </Button>
+                         <Button 
+                           onClick={() => window.open('https://github.com/KurthaTheBurtha/campusguess', '_blank')}
+                           variant="outline" 
+                           className="border-gray-600 text-gray-300 hover:bg-gray-800 hover:border-gray-400 transform hover:scale-105 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group"
+                         >
+                           <Github className="w-4 h-4 mr-2 group-hover:rotate-12 transition-transform duration-300" />
+                           View Code
+                         </Button>
+                       </>
+                                                            ) : project.title === "Waprep Tuition Portal" ? (
+                       <>
+                         <Button 
+                           onClick={() => window.open('https://www.youtube.com/watch?v=FnSUoJcxdro', '_blank')}
+                           className="bg-blue-600 hover:bg-blue-700 text-white transform hover:scale-105 hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/25 transition-all duration-300 group"
+                         >
+                           <ExternalLink className="w-4 h-4 mr-2 group-hover:rotate-45 transition-transform duration-300" />
+                           Live Demo
+                         </Button>
+                        <Button 
+                          onClick={() => window.open('https://github.com/KurthaTheBurtha/WaPrep-Tuition-Portal', '_blank')}
+                          variant="outline" 
+                          className="border-gray-600 text-gray-300 hover:bg-gray-800 hover:border-gray-400 transform hover:scale-105 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group"
+                        >
+                          <Github className="w-4 h-4 mr-2 group-hover:rotate-12 transition-transform duration-300" />
+                          View Code
+                        </Button>
+                      </>
+                                         ) : project.title === "Hurdle Touchdown Time Finder" ? (
+                       <>
+                         <Button 
+                           onClick={() => window.open('https://www.youtube.com/watch?v=kS0t_Gu8U4M', '_blank')}
+                           className="bg-blue-600 hover:bg-blue-700 text-white transform hover:scale-105 hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/25 transition-all duration-300 group"
+                         >
+                           <ExternalLink className="w-4 h-4 mr-2 group-hover:rotate-45 transition-transform duration-300" />
+                           Live Demo
+                         </Button>
+                        <Button 
+                          onClick={() => window.open('https://github.com/KurthaTheBurtha/Hurdle-Touchdown-Time-Finder', '_blank')}
+                          variant="outline" 
+                          className="border-gray-600 text-gray-300 hover:bg-gray-800 hover:border-gray-400 transform hover:scale-105 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group"
+                        >
+                          <Github className="w-4 h-4 mr-2 group-hover:rotate-12 transition-transform duration-300" />
+                          View Code
+                        </Button>
+                      </>
+                    ) : (
+                     <>
+                       <Button className="bg-blue-600 hover:bg-blue-700 text-white transform hover:scale-105 hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/25 transition-all duration-300 group">
+                         <ExternalLink className="w-4 h-4 mr-2 group-hover:rotate-45 transition-transform duration-300" />
+                         Live Demo
+                       </Button>
+                       <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-gray-800 hover:border-gray-400 transform hover:scale-105 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group">
+                         <Github className="w-4 h-4 mr-2 group-hover:rotate-12 transition-transform duration-300" />
+                         View Code
+                       </Button>
+                     </>
+                   )}
+                 </div>
               </div>
             </AnimatedSection>
           ))}
